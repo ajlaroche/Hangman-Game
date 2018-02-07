@@ -1,0 +1,22 @@
+body{
+    background-image: url("../images/concrete_seamless.png");
+}
+h1 {
+    font-family: 'Righteous', cursive;
+    text-align: left;
+    font-size: 5rem;
+    /* margin-left: 10rem; */
+    /* width: 100%; */
+        
+}
+h2{
+    text-align: left;
+    padding-left: 5rem;
+    /* margin-left: 10rem; */
+    /* width: 100%; */
+    
+}
+#logo{
+    padding-top: 1rem;
+    padding-left: 3rem;
+}
