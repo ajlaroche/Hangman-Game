@@ -20,3 +20,11 @@ h2{
     padding-top: 1rem;
     padding-left: 3rem;
 }
+#topspace{
+    height: 10rem;
+}
+#gameSection{
+    display: block;
+    align-content: center;
+    text-align: center;
+}

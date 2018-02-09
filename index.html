@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
     <link rel="stylesheet" href="./assets/css/style.css">
-    <script src="./assets/javascript/game.js"></script>
+
 
 </head>
 
@@ -30,15 +30,33 @@
         </div>
     </header>
     <div class="container">
+        <div class="row" id="topspace"></div>
         <div class="row">
             <div class="col-6"></div>
             <!--Picture column here-->
-            <div class="col-6"></div>
+            <div class="col-6" id="gameSection">
+                <p>Press Any key to get started</p>
+                <br>
+                <p>
+                    <span id="numberOfwins"> wins</span>
+                </p>
+                <br>
+                <p>Current Word</p>
+                <br>
+                <p>
+                    <span id="currentWord"></span>
+                </p>
+                <br>
+                <p>Number of guesses remaining:
+                    <span id="guessesleft"></span>
+                </p>
+            </div>
             <!--Main game rows here-->
         </div>
     </div>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+    <script src="./assets/javascript/game.js"></script>
 </body>
 
 </html>
