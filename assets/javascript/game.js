@@ -13,6 +13,7 @@ var numberOfWins = 0;
 var savedGuesses = "";
 var savedGuessesTest = "";
 var checkGuesses = [];
+var guessCheckResult = false;
 
 //Function to print dashes and with correct guesses on screen
 function printGuess() {
@@ -37,6 +38,7 @@ function resetsheet() {
     }
 
     hiddenWord = []; //used to reset the dashes
+    checkGuesses = [];
 
     for (var i = 0; i < chosenWord.length; i++) {
         hiddenWord[i] = "_ ";
@@ -55,15 +57,26 @@ document.getElementById("numberOfwins").innerHTML = numberOfWins + " Wins";
 
 document.onkeyup = function (event) {
     userLetterGuess = event.key.toLowerCase();
-    savedGuesses = savedGuesses + " " + userLetterGuess.toUpperCase() + ",";
+    // guessesRemaining--;
+    console.log(savedGuessesTest);
+    for (var z = 0; z < savedGuessesTest.length; z++) {
+        checkGuesses[z] = savedGuessesTest.charAt(z);
+        if (userLetterGuess === checkGuesses[z]) {
+            guessCheckResult = true;
+        } else {
+            guessCheckResult = false;
+
+        }
+        console.log("checkguess= " + guessCheckResult)
+
+    }
+    if (guessCheckResult === false) {
+        guessesRemaining--;
+        savedGuesses = savedGuesses + " " + userLetterGuess.toUpperCase() + ",";
+    }
     savedGuessesTest = savedGuessesTest + userLetterGuess;
-    // for (var z = 0; z < savedGuessesTest.length; z++) {
-    //     checkGuesses[z] = savedGuessesTest.charAt(z);
-    //     if (userLetterGuess !== checkGuesses[z]) {
-    //         guessesRemaining--
-    //     }
-    // }
-    guessesRemaining--
+
+
     for (var k = 0; k < hiddenWord.length; k++) {
         if (userLetterGuess === chosenWordBreak[k]) {
             hiddenWord[k] = userLetterGuess;
