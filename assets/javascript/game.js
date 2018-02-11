@@ -10,6 +10,7 @@ var hiddenWord = [];
 var chosenWordBreak = [];
 var userLetterGuess;
 var numberOfWins = 0;
+var numberOflosses = 0;
 var savedGuesses = "";
 var savedGuessesTest = "";
 var checkGuesses = [];
@@ -20,13 +21,33 @@ function printGuess() {
     for (var j = 0; j < hiddenWord.length; j++) {
         initialDashs = initialDashs + hiddenWord[j] + " ";
     }
-    return initialDashs;
 }
 
+function celebrate() {
+    document.getElementById("MainPicture").src = "./assets/images/excited-cowboy.gif";
+    document.getElementById("Intro").innerHTML = "You Win!";
+    setTimeout(function () {
+        document.getElementById("MainPicture").src = "./assets/images/h0.png";
+        document.getElementById("Intro").innerHTML = "Make Your First Guess";
+    }, 3000);
+}
+function loser(){
+    document.getElementById("MainPicture").src = "./assets/images/loser.gif";
+    document.getElementById("Intro").innerHTML = "You Lost!";
+    setTimeout(function () {
+        document.getElementById("MainPicture").src = "./assets/images/h0.png";
+        document.getElementById("Intro").innerHTML = "Make Your First Guess";
+    }, 3000);
+}
+//This function resets the game sheet to starting point
 function resetsheet() {
 
+    //reinitialize variables
     guessesRemaining = guessesAllowed;
     savedGuesses = "";
+    savedGuessesTest = "";
+    hiddenWord = [];
+    checkGuesses = [];
 
     chosenWord = wordLibrary[Math.floor(Math.random() * wordLibrary.length)];
     console.log(chosenWord);
@@ -37,35 +58,30 @@ function resetsheet() {
         chosenWordBreak[x] = chosenWord.charAt(x);
     }
 
-    hiddenWord = []; //used to reset the dashes
-    checkGuesses = [];
-
     for (var i = 0; i < chosenWord.length; i++) {
         hiddenWord[i] = "_ ";
     }
     initialDashs = "";
 
     printGuess(); //Prints initial dashes on screen
+    document.getElementById("currentWord").innerHTML = initialDashs;
+    document.getElementById("guessesleft").innerHTML = " " + guessesAllowed;
+    document.getElementById("numberOfwins").innerHTML = numberOfWins + " Wins " + numberOflosses + " Losses";
+    document.getElementById("LetterGuesses").innerHTML = savedGuesses;
 
 }
 
 resetsheet();
 
-document.getElementById("currentWord").innerHTML = initialDashs;
-document.getElementById("guessesleft").innerHTML = " " + guessesAllowed;
-document.getElementById("numberOfwins").innerHTML = numberOfWins + " Wins";
+//This function checks the user guess for possible repeat
+function checkRepeatGuesses(userentry) {
 
-document.onkeyup = function (event) {
-    userLetterGuess = event.key.toLowerCase();
-    // guessesRemaining--;
-    console.log(savedGuessesTest);
-    for (var z = 0; z < savedGuessesTest.length; z++) {
+    for (var z = 0; z < (savedGuessesTest.length + 1); z++) {
         checkGuesses[z] = savedGuessesTest.charAt(z);
-        if (userLetterGuess === checkGuesses[z]) {
-            guessCheckResult = true;
+        if (userentry === checkGuesses[z]) {
+            guessCheckResult = true; { break; }
         } else {
             guessCheckResult = false;
-
         }
         console.log("checkguess= " + guessCheckResult)
 
@@ -74,8 +90,18 @@ document.onkeyup = function (event) {
         guessesRemaining--;
         savedGuesses = savedGuesses + " " + userLetterGuess.toUpperCase() + ",";
     }
-    savedGuessesTest = savedGuessesTest + userLetterGuess;
+}
 
+//This is the main section of the code, what happens when the user presses a key
+document.onkeyup = function (event) {
+    document.getElementById("MainPicture").src = "./assets/images/h0.png";
+    userLetterGuess = event.key.toLowerCase();
+
+    console.log(savedGuessesTest);
+
+    checkRepeatGuesses(userLetterGuess);
+
+    savedGuessesTest = savedGuessesTest + userLetterGuess;
 
     for (var k = 0; k < hiddenWord.length; k++) {
         if (userLetterGuess === chosenWordBreak[k]) {
@@ -95,14 +121,16 @@ document.onkeyup = function (event) {
 
     if (userwordtestresult === chosenWord) {
         numberOfWins++;
+        celebrate();
         resetsheet();
-        document.getElementById("currentWord").innerHTML = initialDashs;
-        document.getElementById("guessesleft").innerHTML = " " + guessesAllowed;
-        document.getElementById("numberOfwins").innerHTML = numberOfWins + " Wins";
-        document.getElementById("Intro").innerHTML = "Press Any Key to Get Started!";
-        document.getElementById("LetterGuesses").innerHTML = savedGuesses;
 
     } else {
         document.getElementById("Intro").innerHTML = "Choose Another Letter";
     }
+    if (guessesRemaining === 0) {
+        numberOflosses++;
+        loser();
+        resetsheet();
+    }
 }
+
