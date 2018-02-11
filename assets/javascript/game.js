@@ -31,7 +31,7 @@ function celebrate() {
         document.getElementById("Intro").innerHTML = "Make Your First Guess";
     }, 3000);
 }
-function loser(){
+function loser() {
     document.getElementById("MainPicture").src = "./assets/images/loser.gif";
     document.getElementById("Intro").innerHTML = "You Lost!";
     setTimeout(function () {
@@ -95,42 +95,46 @@ function checkRepeatGuesses(userentry) {
 //This is the main section of the code, what happens when the user presses a key
 document.onkeyup = function (event) {
     document.getElementById("MainPicture").src = "./assets/images/h0.png";
-    userLetterGuess = event.key.toLowerCase();
+    if (event.keyCode >= 65 && event.keyCode <= 90) {
+        userLetterGuess = event.key.toLowerCase();
 
-    console.log(savedGuessesTest);
+        console.log(savedGuessesTest);
 
-    checkRepeatGuesses(userLetterGuess);
+        checkRepeatGuesses(userLetterGuess);
 
-    savedGuessesTest = savedGuessesTest + userLetterGuess;
+        savedGuessesTest = savedGuessesTest + userLetterGuess;
 
-    for (var k = 0; k < hiddenWord.length; k++) {
-        if (userLetterGuess === chosenWordBreak[k]) {
-            hiddenWord[k] = userLetterGuess;
+        for (var k = 0; k < hiddenWord.length; k++) {
+            if (userLetterGuess === chosenWordBreak[k]) {
+                hiddenWord[k] = userLetterGuess;
+            }
+            initialDashs = ""; //re-initialize dashes to be printed on the screen
+            printGuess(); //updates screen with user guess
         }
-        initialDashs = ""; //re-initialize dashes to be printed on the screen
-        printGuess(); //updates screen with user guess
-    }
-    for (var y = 0; y < hiddenWord.length; y++) {
-        userwordtest = userwordtest + hiddenWord[y];
-    }
-    document.getElementById("currentWord").innerHTML = initialDashs;
-    document.getElementById("guessesleft").innerHTML = " " + guessesRemaining;
-    document.getElementById("LetterGuesses").innerHTML = savedGuesses;
-    userwordtestresult = userwordtest;
-    userwordtest = "";
+        for (var y = 0; y < hiddenWord.length; y++) {
+            userwordtest = userwordtest + hiddenWord[y];
+        }
+        document.getElementById("currentWord").innerHTML = initialDashs;
+        document.getElementById("guessesleft").innerHTML = " " + guessesRemaining;
+        document.getElementById("LetterGuesses").innerHTML = savedGuesses;
+        userwordtestresult = userwordtest;
+        userwordtest = "";
 
-    if (userwordtestresult === chosenWord) {
-        numberOfWins++;
-        celebrate();
-        resetsheet();
+        if (userwordtestresult === chosenWord) {
+            numberOfWins++;
+            celebrate();
+            resetsheet();
 
-    } else {
-        document.getElementById("Intro").innerHTML = "Choose Another Letter";
-    }
-    if (guessesRemaining === 0) {
-        numberOflosses++;
-        loser();
-        resetsheet();
+        } else {
+            document.getElementById("Intro").innerHTML = "Choose Another Letter";
+        }
+        if (guessesRemaining === 0) {
+            numberOflosses++;
+            loser();
+            resetsheet();
+        }
+    } else{
+        alert("Only type letters");
     }
 }
 
