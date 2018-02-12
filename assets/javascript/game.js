@@ -1,4 +1,4 @@
-var wordLibrary = ["horse", "cowboy", "shotgun", "ranch", "cattle", "longhorn", "aggie", "rodeo"];
+var wordLibrary = ["horse", "cowboy", "shotgun", "ranch", "cattle", "longhorn", "aggie", "rodeo","dallas","houston","austin"];
 
 var initialDashs = "";
 var chosenWord = "";
@@ -26,18 +26,23 @@ function printGuess() {
 function celebrate() {
     document.getElementById("MainPicture").src = "./assets/images/excited-cowboy.gif";
     document.getElementById("Intro").innerHTML = "You Win!";
+    document.getElementById("gunshots").play();
+    document.getElementById("applause").play();
     setTimeout(function () {
         document.getElementById("MainPicture").src = "./assets/images/h0.png";
-        document.getElementById("Intro").innerHTML = "Make Your First Guess";
-    }, 3000);
+        document.getElementById("Intro").innerHTML = "Make Your First Guess!";
+        resetsheet();
+    }, 4000);
 }
 function loser() {
     document.getElementById("MainPicture").src = "./assets/images/loser.gif";
     document.getElementById("Intro").innerHTML = "You Lost!";
+    document.getElementById("crying").play();
     setTimeout(function () {
         document.getElementById("MainPicture").src = "./assets/images/h0.png";
-        document.getElementById("Intro").innerHTML = "Make Your First Guess";
-    }, 3000);
+        document.getElementById("Intro").innerHTML = "Make Your First Guess!";
+        resetsheet();
+    }, 4000);
 }
 //This function resets the game sheet to starting point
 function resetsheet() {
@@ -123,17 +128,14 @@ document.onkeyup = function (event) {
         if (userwordtestresult === chosenWord) {
             numberOfWins++;
             celebrate();
-            resetsheet();
-
         } else {
             document.getElementById("Intro").innerHTML = "Choose Another Letter";
         }
         if (guessesRemaining === 0) {
             numberOflosses++;
             loser();
-            resetsheet();
         }
-    } else{
+    } else {
         alert("Only type letters");
     }
 }
